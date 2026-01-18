@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Language Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sign_language.css') }}">
+</head>
+<body>
+    <div class="back-button-container">
+        <a href="/" class="back-button">← Back to Home</a>
+    </div>
+
+    <div class="container">
+        <h1>🤟 Sign Language Detector</h1>
+        <p class="subtitle">Capture or upload an image to detect sign language</p>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="switchMode('upload')">📤 Upload Image</button>
+            <button class="mode-btn" onclick="switchMode('camera')">📷 Capture from Camera</button>
+        </div>
+
+        <!-- Upload Mode -->
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">Click to upload or drag & drop</div>
+            <div class="upload-subtext">Supports JPG, PNG, JPEG</div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <!-- Camera Mode -->
+        <div class="camera-area" id="cameraArea">
+            <div class="video-container">
+                <video id="video" autoplay playsinline></video>
+                <div class="camera-overlay"></div>
+            </div>
+            <canvas id="captureCanvas"></canvas>
+            <div class="camera-controls">
+                <button class="camera-btn capture" onclick="captureImage()">📸 Capture Sign</button>
+                <button class="camera-btn cancel" onclick="stopCamera()">❌ Cancel</button>
+            </div>
+            <div class="camera-instructions">
+                <ul>
+                    <li>Position your hands clearly in the camera frame</li>
+                    <li>Ensure good lighting and avoid complex backgrounds</li>
+                    <li>Hold the sign steady and click "Capture Sign"</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Detecting sign language...</div>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="preview-area" id="previewArea">
+            <div class="image-container">
+                <div class="image-box">
+                    <img id="originalImage" src="" alt="Original">
+                    <div class="image-label">Original Image</div>
+                </div>
+                <div class="image-box">
+                    <img id="detectedImage" src="" alt="Detected">
+                    <div class="image-label">Hand Detection (Processed)</div>
+                </div>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <div class="prediction" id="prediction">-</div>
+                <div class="confidence" id="confidence">-</div>
+                <div class="top-predictions" id="topPredictions"></div>
+            </div>
+
+            <center>
+                <button class="btn-reset" onclick="resetUpload()">Try Another Sign</button>
+            </center>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='sign_language.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vision Assistant Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <div class="logo">👁️</div>
+                <div>
+                    <h1>Voice and Vision</h1>
+                    <p class="subtitle">Using AI to Empower Vision and Bridge Communication Gap Among Individuals with Sensory Disabilities </p>
+                </div>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5568;">System Active</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('object')">
+                    🎯 Object Detection
+                </button>
+                <button class="tab" onclick="switchTab('text')">
+                    📄 Text Recognition
+                </button>
+                <button class="tab" onclick="switchTab('input')">
+                    🔊 Text Input
+                </button>
+            </div>
+
+            <!-- Object Detection Tab -->
+            <div id="object-tab" class="tab-content active">
+                <div class="video-container">
+                    <img id="video-feed" src="/video_feed" alt="Live Camera Feed">
+                    <div class="video-overlay" id="object-overlay">
+                        <span class="badge badge-info">Object Detection Mode</span>
+                    </div>
+                </div>
+
+                <div class="controls-grid">
+                    <div class="control-card">
+                        <label class="control-label">Camera Control</label>
+                        <button class="btn btn-primary" onclick="toggleCamera('object')" id="btn-object">
+                            <span>📹</span> Start Camera
+                        </button>
+                    </div>
+
+                    <div class="control-card">
+                        <label class="control-label">Detection Toggle</label>
+                        <button class="btn btn-secondary" onclick="toggleDetection()" id="btn-detect">
+                            <span>🔍</span> Enable Detection
+                        </button>
+                    </div>
+                </div>
+
+                <div class="status-card" id="object-status">
+                    <div class="status-title">Current Status</div>
+                    <div class="status-value">Initializing...</div>
+                    <div class="detection-grid" id="detected-objects"></div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">Voice Commands</div>
+                    <ul class="info-list">
+                        <li>"Open Camera" - Start object detection</li>
+                        <li>"Close" - Stop camera</li>
+                        <li>"Toggle Detection" - Enable/disable detection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Text Detection Tab -->
+            <div id="text-tab" class="tab-content">
+                <div class="video-container">
+                    <img id="video-feed-text" src="/video_feed" alt="Live Camera Feed">
+                    <div class="video-overlay" id="text-overlay">
+                        <span class="badge badge-warning">Text Recognition Mode</span>
+                    </div>
+                </div>
+
+                <div class="controls-grid">
+                    <div class="control-card">
+                        <label class="control-label">Camera Control</label>
+                        <button class="btn btn-primary" onclick="toggleCamera('text')" id="btn-text">
+                            <span>📹</span> Start Camera
+                        </button>
+                    </div>
+                </div>
+
+                <div class="status-card" id="text-status">
+                    <div class="status-title">Text Detection Status</div>
+                    <div class="status-value">Ready</div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">Usage Instructions</div>
+                    <ul class="info-list">
+                        <li>Place document about 8 inches from camera</li>
+                        <li>Center text within the green detection box</li>
+                        <li>Ensure good lighting for best results</li>
+                        <li>Voice command: "Open Text Camera"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Text Input Tab -->
+            <div id="input-tab" class="tab-content">
+                <div class="text-input-container">
+                    <div class="input-header">
+                        <div class="input-icon">🔊</div>
+                        <h2>Text-to-Speech Input</h2>
+                        <p class="input-subtitle">Type any text and hear it spoken aloud</p>
+                    </div>
+
+                    <div class="input-area">
+                        <label for="user-text-input" class="input-label">Enter Your Text</label>
+                        <textarea 
+                            id="user-text-input" 
+                            class="text-input-field" 
+                            placeholder="Type or paste your text here... The assistant will read it aloud for you."
+                            rows="8"
+                        ></textarea>
+                        
+                        <div class="character-count">
+                            <span id="char-count">0</span> characters
+                        </div>
+                    </div>
+
+                    <div class="controls-grid">
+                        <div class="control-card">
+                            <label class="control-label">Speech Control</label>
+                            <button class="btn btn-primary" onclick="speakInputText()" id="btn-speak-input">
+                                <span>🔊</span> Speak Text
+                            </button>
+                        </div>
+
+                        <div class="control-card">
+                            <label class="control-label">Clear Text</label>
+                            <button class="btn btn-secondary" onclick="clearInputText()">
+                                <span>🗑️</span> Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="status-card" id="input-status">
+                        <div class="status-title">Status</div>
+                        <div class="status-value" id="input-status-text">Ready to speak</div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-title">Features</div>
+                        <ul class="info-list">
+                            <li>Type or paste any text you want to hear</li>
+                            <li>Natural voice synthesis powered by TTS</li>
+                            <li>Support for multiple languages and accents</li>
+                            <li>Perfect for accessibility and learning</li>
+                        </ul>
+                    </div>
+
+                    <div class="sample-texts">
+                        <div class="info-title">Quick Samples</div>
+                        <div class="sample-grid">
+                            <button class="sample-btn" onclick="loadSampleText('Hello! Welcome to the AI Vision Assistant Pro.')">
+                                👋 Greeting
+                            </button>
+                            <button class="sample-btn" onclick="loadSampleText('The quick brown fox jumps over the lazy dog.')">
+                                🦊 Pangram
+                            </button>
+                            <button class="sample-btn" onclick="loadSampleText('To be or not to be, that is the question.')">
+                                🎭 Shakespeare
+                            </button>
+                            <button class="sample-btn" onclick="loadSampleText('In the beginning was the Word, and the Word was with God.')">
+                                📖 Verse
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Language Section -->
+    <div style="margin-top: 50px;"></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <div class="logo">🤟</div>
+                <div>
+                    <h1>Sign Language Detection</h1>
+                    <p class="subtitle">Choose your detection method</p>
+                </div>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5568;">Ready</span>
+            </div>
+        </div>
+
+        <div class="sign-language-options">
+            <div class="sign-option-card">
+                <div class="sign-option-icon">📸</div>
+                <h3>Image Detection</h3>
+                <p>Upload or capture images for sign language recognition</p>
+                <a href="/sign-language" class="btn btn-primary btn-large">
+                    <span>🚀</span> Open Image Detector
+                </a>
+            </div>
+
+            <div class="sign-option-card realtime-card">
+                <div class="sign-option-icon animate-hand">🖐️</div>
+                <h3>Real-time Detection</h3>
+                <p>Live camera feed with instant gesture recognition</p>
+                <a href="/realtime-sign" class="btn btn-primary btn-large btn-realtime">
+                    <span>▶️</span> Start Real-time Detection
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Character Detection Section -->
+    <div style="margin-top: 50px;"></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <div class="logo">✍️</div>
+                <div>
+                    <h1>Character Detection</h1>
+                    <p class="subtitle">Real-time Indian Sign Language Alphabet Recognition (A-Z, 1-9)</p>
+                </div>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5568;">Ready</span>
+            </div>
+        </div>
+
+        <div class="character-detection-section">
+            <div class="character-option-card">
+                <div class="character-option-icon">🔤</div>
+                <h3>Live Character Recognition</h3>
+                <p>Real-time detection of sign language alphabets and numbers</p>
+                <div class="character-features">
+                    <div class="feature-badge">✓ Supports A-Z alphabets</div>
+                    <div class="feature-badge">✓ Recognizes numbers 1-9</div>
+                    <div class="feature-badge">✓ Instant real-time feedback</div>
+                </div>
+                <a href="/character-detection" class="btn btn-primary btn-large btn-character">
+                    <span>🎯</span> Start Character Detection
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Speech to Text Section -->
+    <div style="margin-top: 50px;"></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <div class="logo">🎙️</div>
+                <div>
+                    <h1>Speech to Text Converter</h1>
+                    <p class="subtitle">Convert your voice into text with a single tap</p>
+                </div> 
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5568;">System Active</span>
+            </div> 
+        </div>
+
+        <div class="speechcontainer">
+            <form action="/speech">
+                <button type="submit" class="btn btn-primary btn-large">
+                    <span>🎤</span> Open Converter
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

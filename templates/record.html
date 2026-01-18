@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Speech to Text</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='recordstyle.css') }}">
+  <script>
+    let recording = false;
+
+    async function toggleRecording() {
+      if (!recording) {
+        recording = true;
+        document.getElementById("mic").classList.add("pulse");
+        document.getElementById("status").innerText = "Listening...";
+        await fetch('/start_record', { method: 'POST' })
+          .then(response => response.text())
+          .then(html => { document.body.innerHTML = html; });
+      } else {
+        recording = false;
+        document.getElementById("mic").classList.remove("pulse");
+        document.getElementById("status").innerText = "Processing...";
+        await fetch('/stop_record', { method: 'POST' });
+      }
+    }
+
+    // Handle file upload automatically
+    async function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      document.getElementById("status").innerText = "Processing uploaded file...";
+      const formData = new FormData();
+      formData.append('audio', file);
+
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const html = await response.text();
+      document.body.innerHTML = html;
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div id="mic" class="mic" onclick="toggleRecording()">🎙️</div>
+    <h1>Speech to Text</h1>
+    <p id="status">Tap the microphone to start recording or upload a file.</p>
+
+    <div class="upload-box">
+      <label for="fileInput" class="custom-file-label">Choose Audio File</label>
+      <input type="file" id="fileInput" accept="audio/*" onchange="handleFileUpload(event)" />
+    </div>
+
+    {% if text %}
+     <div class="text-section">
+      <textarea readonly>{{ text }}</textarea>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>

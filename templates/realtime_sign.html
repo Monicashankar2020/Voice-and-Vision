@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Sign Language Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='realtime_sign.css') }}">
+</head>
+<body>
+    <div class="back-button-container">
+        <a href="/" class="back-button">← Back to Home</a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🖐️ Real-time Sign Language Detection</h1>
+            <p class="subtitle">Live camera feed with instant gesture recognition</p>
+        </div>
+
+        <div class="main-content">
+            <div class="video-section">
+                <div class="video-wrapper">
+                    <img id="video-feed" src="{{ url_for('realtime_sign_feed') }}" alt="Live Feed">
+                    <div class="video-status" id="video-status">
+                        <span class="status-dot"></span>
+                        <span>Live Detection</span>
+                    </div>
+                </div>
+
+                <div class="controls-panel">
+                    <button class="control-btn start-btn" id="start-btn" onclick="startDetection()">
+                        <span class="btn-icon">▶️</span>
+                        <span>Start Detection</span>
+                    </button>
+                    <button class="control-btn stop-btn" id="stop-btn" onclick="stopDetection()" disabled>
+                        <span class="btn-icon">⏹️</span>
+                        <span>Stop Detection</span>
+                    </button>
+                    <button class="control-btn refresh-btn" onclick="refreshFeed()">
+                        <span class="btn-icon">🔄</span>
+                        <span>Refresh</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="detection-info">
+                    <h3>📊 Detection Information</h3>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-label">Current Gesture</div>
+                            <div class="info-value" id="current-gesture">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Confidence</div>
+                            <div class="info-value" id="confidence">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Frames Processed</div>
+                            <div class="info-value" id="frame-count">0</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Status</div>
+                            <div class="info-value status-ready" id="status">Ready</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gesture-guide">
+                    <h3>✋ Supported Gestures</h3>
+                    <div class="gesture-grid">
+                        <div class="gesture-item">
+                            <div class="gesture-icon">👋</div>
+                            <div class="gesture-name">Hello</div>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon">❤️</div>
+                            <div class="gesture-name">I Love You</div>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon">🚫</div>
+                            <div class="gesture-name">No</div>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon">👌</div>
+                            <div class="gesture-name">Okay</div>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon">🙏</div>
+                            <div class="gesture-name">Please</div>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon">🙌</div>
+                            <div class="gesture-name">Thank You</div>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon">✅</div>
+                            <div class="gesture-name">Yes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="usage-tips">
+                    <h3>💡 Tips for Best Results</h3>
+                    <ul>
+                        <li>Ensure good lighting in the room</li>
+                        <li>Position your hand clearly in front of the camera</li>
+                        <li>Use a plain background for better detection</li>
+                        <li>Keep your hand steady while making gestures</li>
+                        <li>Stand 1-2 feet away from the camera</li>
+                        <li>Make clear and distinct gestures</li>
+                    </ul>
+                </div>
+
+                <div class="stats-panel">
+                    <h3>📈 Detection Statistics</h3>
+                    <div class="stats-container">
+                        <canvas id="detectionChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="recent-detections">
+                        <h4>Recent Detections:</h4>
+                        <div id="detection-history" class="history-list">
+                            <p class="no-history">No detections yet. Start detection to see results.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='realtime_sign.js') }}"></script>
+</body>
+</html>

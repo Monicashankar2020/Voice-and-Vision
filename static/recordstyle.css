@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top left, #8ec5fc, #e0c3fc, #b8c6db); 
+  color: #1b1b2f; 
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  width: 75%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px);
+  border-radius: 35px;
+  padding: 60px 50px;
+  text-align: center;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+.container:hover {
+  transform: scale(1.01);
+  box-shadow: 0 25px 100px rgba(0, 0, 0, 0.35);
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: #2c003e;
+  letter-spacing: 1.8px;
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6);
+  animation: fadeSlide 1.2s ease-in-out;
+}
+
+p {
+  font-size: 1.4rem;
+  opacity: 0.9;
+  margin-bottom: 45px;
+  color: #3a3a52;
+  font-weight: 500;
+}
+
+button {
+  background: linear-gradient(135deg, #2e005f, #6a0dad);
+  border: none;
+  padding: 22px 45px;
+  border-radius: 60px;
+  font-size: 1.4rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.4s ease, box-shadow 0.4s ease;
+  margin: 15px 0;
+  font-weight: 600;
+  width: 75%;
+  box-shadow: 0 6px 25px rgba(106, 13, 173, 0.4);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #6a0dad, #9d50bb);
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 10px 35px rgba(106, 13, 173, 0.6);
+}
+
+/* Styled Choose File Button */
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-label {
+  display: inline-block;
+  width: 75%;
+  padding: 22px 45px;
+  border-radius: 60px;
+  background: linear-gradient(135deg, #7dd3fc, #60a5fa, #3b82f6);
+  color: #001b44;
+  font-weight: 600;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+}
+
+.custom-file-label:hover {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa, #7dd3fc);
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+}
+
+/* Microphone pulse animation */
+.mic {
+  width: 130px;
+  height: 130px;
+  margin: 40px auto;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ff9a9e, #f6416c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  color: white;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 0 50px rgba(246, 65, 108, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.mic:hover {
+  transform: scale(1.08);
+}
+
+.mic.pulse::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(246, 65, 108, 0.4);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* Output Textarea - separate section */
+textarea {
+  width: 75%;
+  height: 340px;
+  margin: 50px auto 20px;
+  display: block;
+  border: none;
+  border-radius: 25px;
+  padding: 30px;
+  font-size: 1.6rem;
+  line-height: 1.9;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.25));
+  color: #1b1b2f;
+  resize: none;
+  outline: none;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:hover {
+  transform: scale(1.01);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.25);
+}
+
+textarea::placeholder {
+  color: rgba(27, 27, 47, 0.8);
+  font-size: 1.6rem;
+}
+
+.upload-box {
+  margin-top: 40px;
+}
+/* Separate text output section styling */
+.text-section {
+  width: 75%;
+  max-width: 1100px;
+  margin: 40px auto;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.text-section textarea {
+  width: 100%;
+  height: 340px;
+  border: none;
+  border-radius: 25px;
+  padding: 30px;
+  font-size: 1.6rem;
+  line-height: 1.9;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.25));
+  color: #1b1b2f;
+  resize: none;
+  outline: none;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.text-section textarea:hover {
+  transform: scale(1.01);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.25);
+}
+
+/* Subtle entrance animations */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeSlide {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
